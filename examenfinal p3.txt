@@ -1,0 +1,62 @@
+
+
+CREATE(Azucena:persona{nombre:"Azucena"})
+CREATE(Fernanda:persona{nombre:"Fernanda"})
+CREATE(vivian:persona{nombre:"vivian"})
+CREATE(Wilfredo:persona{nombre:"Wilfredo"})
+CREATE(Selvin:persona{nombre:"Selvin"})
+CREATE(Robyn:persona{nombre:"Robyn"})
+CREATE(Mery:persona{nombre:"Mery"})
+CREATE(Maria:persona{nombre:"Maria"})
+
+
+CREATE(Futbol:Hobby{nombre:"Futbol"})
+CREATE(Programar:Hobby{nombre:"Programar"})
+CREATE(Leer:Hobby{nombre:"Leer"})
+
+
+
+match(Azucena:persona{nombre:"Azucena"})match (Fernanda:persona{nombre:"Fernanda"})create(Azucena)-[:MAMA_OF{role:["mama"]}]->(Fernanda)
+match(Azucena:persona{nombre:"Azucena"})match (Wilfredo:persona{nombre:"Wilfredo"})create(Azucena)-[:MAMA_OF{role:["mama"]}]->(Wilfredo)
+match(Azucena:persona{nombre:"Azucena"})match (vivian:persona{nombre:"vivian"})create(Azucena)-[:MAMA_OF{role:["mama"]}]->(vivian)
+
+match(Fernanda:persona{nombre:"Fernanda"})match (Wilfredo:persona{nombre:"Wilfredo"})create(Fernanda)-[:HERMANA_OF{role:["HERMANOS"]}]->(Wilfredo)
+match(Fernanda:persona{nombre:"Fernanda"})match (vivian:persona{nombre:"vivian"})create(Fernanda)-[:HERMANA_OF{role:["HERMANAS"]}]->(vivian)
+match(Wilfredo:persona{nombre:"Wilfredo"})match (vivian:persona{nombre:"vivian"})create(Wilfredo)-[:HERMANA_OF{role:["HERMANOS"]}]->(vivian)
+
+
+match(Fernanda:persona{nombre:"Fernanda"})match (Maria:persona{nombre:"Maria"})create(Fernanda)-[:FRIEND_OF{role:["amiga de escuela"]}]->(Maria)
+match(Fernanda:persona{nombre:"Fernanda"})match (Robyn:persona{nombre:"Robyn"})create(Fernanda)-[:FRIEND_OF{role:["amigo de universidad"]}]->(Robyn)
+
+match(vivian:persona{nombre:"vivian"})match (Mery:persona{nombre:"Mery"})create(vivian)-[:FRIEND_OF{role:["amigo de la escuela"]}]->(Mery)
+match(Wilfredo:persona{nombre:"Wilfredo"})match (Selvin:persona{nombre:"Selvin"})create(Wilfredo)-[:FRIEND_OF{role:["amigo de trabajo"]}]->(Selvin)
+
+
+
+
+match(Fernanda:persona{nombre:"Fernanda"})match (Programar:Hobby{nombre:"Programar"})create(Fernanda)-[:Interes_En{role:["progra"]}]->(Programar)
+match(Robyn:persona{nombre:"Robyn"})match (Programar:Hobby{nombre:"Programar"})create(Robyn)-[:Interes_En{role:["progra"]}]->(Programar)
+match(vivian:persona{nombre:"vivian"})match (Futbol:Hobby{nombre:"Futbol"})create(vivian)-[:Interes_En{role:["fut"]}]->(Futbol)
+match(Wilfredo:persona{nombre:"Wilfredo"})match (Futbol:Hobby{nombre:"Futbol"})create(Wilfredo)-[:Interes_En{role:["fut"]}]->(Futbol)
+match(Selvin:persona{nombre:"Selvin"})match (Futbol:Hobby{nombre:"Futbol"})create(Selvin)-[:Interes_En{role:["fut"]}]->(Futbol)
+match(Mery:persona{nombre:"Mery"})match (Leer:Hobby{nombre:"Leer"})create(Mery)-[:Interes_En{role:["Leer"]}]->(Leer)
+match(Maria:persona{nombre:"Maria"})match (Leer:Hobby{nombre:"Leer"})create(Maria)-[:Interes_En{role:["Leer"]}]->(Leer)
+match(Azucena:persona{nombre:"Azucena"})match (Leer:Hobby{nombre:"Leer"})create(Azucena)-[:Interes_En{role:["Leer"]}]->(Leer)
+
+
+para eliminar conexiones:
+MATCH (Wilfredo:persona {nombre: "Wilfredo"})-[r:FRIEND_OF{role: ["amigo de trabajo"]}]->(Selvin:persona {nombre: "Selvin"})
+DELETE r
+
+para eliminar nodo:
+
+MATCH (f:Hobby:Hobby {nombre: "Programar"})
+DETACH DELETE f
+
+
+
+//pruebas
+match(Vivian:persona{nombre:"Vivian"})match (Fernanda:persona{nombre:"Fernanda"})create(Vivian)-[:Familia_de]->(Fernanda)
+
+match(Paco:persona{nombre:"Karina"})match (Fernanda:persona{nombre:"Fernanda"})create(Karina)-[:FRIEND_OF{role:["amiga del trabajo"]}]->(Fernanda)
+
